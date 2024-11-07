@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    username: ${CONTAINER.USERNAME}
+    password: ${CONTAINER.PASSWORD}
+    url: ${CONTAINER.URL}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    drop-first: true
+    change-log: classpath:/changelog.xml
+
+aws:
+  s3:
+    photos-folder: ${AWS_FOLDER}
+    region: ${AWS_REGION:eu-central-1}
+    bucket: ${AWS_BUCKET}
+    access-key-id: dummy
+    secret-access-key: dummy
+
+pagination:
+  page-size: 10
+
+jwt:
+  secret-key:
+    5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
+  expiration:
+    3600000000
+scheduler:
+  cache:
+    period: '0 0 * * * *'
