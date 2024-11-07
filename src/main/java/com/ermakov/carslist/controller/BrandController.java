@@ -2,6 +2,8 @@ package com.ermakov.carslist.controller;
 
 import com.ermakov.carslist.model.Brand;
 import com.ermakov.carslist.service.BrandService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -28,17 +30,27 @@ public class BrandController {
   }
 
   @PostMapping
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Brand> createBrand(@RequestBody @Valid Brand brand) {
     return new ResponseEntity<>(brandService.createBrand(brand), HttpStatus.OK);
   }
 
   @GetMapping("/{brandId}")
+  @ApiResponse(responseCode = "200", description = "OK")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Brand> findBrandById(@PathVariable("brandId")
                                              @NotNull @Positive Long brandId) {
     return new ResponseEntity<>(brandService.getBrand(brandId), HttpStatus.OK);
   }
 
   @PutMapping("/{brandId}")
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Brand> editBrand(@PathVariable("brandId")
                                          @NotNull @Positive Long brandId,
                                          @RequestBody @Valid Brand brand) {
@@ -47,6 +59,10 @@ public class BrandController {
   }
 
   @DeleteMapping("/{brandId}")
+  @ApiResponse(responseCode = "204", description = "NO_CONTENT")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Void> deleteBrand(@PathVariable("brandId")
                                @NotNull @Positive Long brandId) {
     brandService.deleteBrand(brandId);

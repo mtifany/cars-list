@@ -8,6 +8,8 @@ import com.ermakov.carslist.model.UniqueModelsNames;
 import com.ermakov.carslist.model.request.CreateModelRequest;
 import com.ermakov.carslist.model.request.EditModelRequest;
 import com.ermakov.carslist.service.ModelService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,6 +41,10 @@ public class ModelController {
 
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {
       MediaType.APPLICATION_JSON_VALUE})
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Model> createModel(@RequestParam("photo") @NotNull MultipartFile photo,
                                            @RequestParam("request") @NotBlank String request) {
     var createModelRequest = getObjectFromJson(request, CreateModelRequest.class);
@@ -46,12 +52,22 @@ public class ModelController {
   }
 
   @GetMapping("/{modelId}")
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @ApiResponse(responseCode = "404", description = "NOT_FOUND")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Model> findModelById(@PathVariable("modelId")
                                              @NotNull @Positive Long modelId) {
     return new ResponseEntity<>(modelService.getModel(modelId), HttpStatus.OK);
   }
 
   @DeleteMapping("/{modelId}")
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @ApiResponse(responseCode = "404", description = "NOT_FOUND")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Void> deleteModel(@PathVariable("modelId")
                                           @NotNull @Positive Long modelId) {
     modelService.deleteModel(modelId);
@@ -59,17 +75,30 @@ public class ModelController {
   }
 
   @GetMapping("/names")
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<UniqueModelsNames> getUniqueNames() {
     return ResponseEntity.ok(modelService.getUniqueModelsNames());
   }
 
   @GetMapping
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Page<Model>> findModels(CarsFilter carsFilter, @RequestParam @NotNull @Min(value = 0) Integer page) {
     Page<Model> modelPage = modelService.getFilteredModelsPaged(carsFilter, page);
     return ResponseEntity.ok(modelPage);
   }
 
   @PutMapping
+  @ApiResponse(responseCode = "200", description = "OK")
+  @ApiResponse(responseCode = "400", description = "BAD REQUEST")
+  @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
+  @ApiResponse(responseCode = "404", description = "NOT_FOUND")
+  @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Model> editModel(@RequestParam("photo") MultipartFile photo,
                                          @RequestParam("request") @NotBlank String request) {
 
