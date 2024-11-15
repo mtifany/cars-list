@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface ModelMapper {
 
-  @Mapping(target = "id", ignore = true)
   @Mapping(target = "brand.name", source = "modelEntity.brandEntity.name")
   Model toModel(ModelEntity modelEntity);
 }

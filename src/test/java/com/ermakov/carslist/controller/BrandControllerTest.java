@@ -45,7 +45,6 @@ class BrandControllerTest extends AbstractIntegrationTest {
   void whenEditBrand_thenOkReturned() throws Exception {
     var brand = new Brand(1L, "Brand2");
 
-
     mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL + "/1")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(asJsonString(brand)))

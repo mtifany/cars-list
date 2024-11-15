@@ -88,7 +88,8 @@ public class ModelController {
   @ApiResponse(responseCode = "400", description = "BAD REQUEST")
   @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
   @SecurityRequirement(name = "bearerAuth")
-  public ResponseEntity<Page<Model>> findModels(CarsFilter carsFilter, @RequestParam @NotNull @Min(value = 0) Integer page) {
+  public ResponseEntity<Page<Model>> findModels(@RequestParam(required = false) String brandName, @RequestParam(required = false) String modelName, @RequestParam @NotNull @Min(value = 0) Integer page) {
+    var carsFilter = new CarsFilter(modelName, brandName);
     Page<Model> modelPage = modelService.getFilteredModelsPaged(carsFilter, page);
     return ResponseEntity.ok(modelPage);
   }
