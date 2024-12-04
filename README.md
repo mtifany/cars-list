@@ -11,8 +11,11 @@ Cars and models application which stores different car brands and models with ph
 5.Edit the model (name and photo) by the user with Admin role.
 
 **Prerequisites:**
+
 **Java:** Ensure you have Java 17 installed.
+
 **Maven:** Verify that Apache Maven is installed and configured.
+
 **PostgreSQL:**
 Install PostgreSQL locally or ensure access to a running instance.
 Create a database for the project.
@@ -23,6 +26,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/cars_db
         username: postgres
         password: postgres
+
 **S3 Configuration:**
 Provide valid AWS S3 credentials in your environment variables or application.yml file:
 aws:
