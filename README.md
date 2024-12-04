@@ -21,14 +21,16 @@ Install PostgreSQL locally or ensure access to a running instance.
 Create a database for the project.
 Update the database connection details in application.yml:
 Copy code
+   ```
 spring:
       datasource:
         url: jdbc:postgresql://localhost:5432/cars_db
         username: postgres
         password: postgres
-
+   ```
 **S3 Configuration:**
 Provide valid AWS S3 credentials in your environment variables or application.yml file:
+   ```
 aws:
   s3:
     photos-folder: <your-folder-name>
@@ -36,7 +38,7 @@ aws:
     bucket: <your-bucket>
     access-key-id: <your-access-key>
     secret-access-key:<your-secret-key>
-
+   ```
 **Start the application:** `mvn spring-boot:run`
 
 
